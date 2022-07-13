@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Models.AddUpdateItemViewModel
+
+@{
+    ViewData["Title"] = "Purshase More From"+ViewData["ItemName"];
+         var data= new Dictionary<string, string>
+    {
+        { "Id", ""+@Model.BranchID },
+        { "oldItemId", ""+@Model.OldItemID }
+    };
+}
+
+
+<div>
+    
+  <div>
+      <h1>Purshase Item with ID:@Model.OldItemID</h1>
+    <h4 class="text-danger">Please fill all inputs @Model.OldItemID</h4>
+    <a asp-route-id="@Model.BranchID" class="text-success" asp-controller="Item" asp-action="Index"><i class="fa-solid fa-circle-arrow-left fs-2"></i></a>
+</div>
+    <hr />
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-all-route-data="data" asp-controller="item" asp-action="PurchaseMoreFromItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         
+            <div class="form-group">
+                <label asp-for="@Model.Quantity" class="control-label"></label>
+                <input asp-for="@Model.Quantity" class="form-control" />
+                <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <input type="submit" value="purshase" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

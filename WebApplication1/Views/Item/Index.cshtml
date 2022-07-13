@@ -1,0 +1,90 @@
+﻿@model List<ItemOfBranchViewModel>
+
+
+
+<div>
+     <h1 class="text-end">
+        @ViewData["Title"]
+    </h1>
+  <div>
+    <a class="text-success" asp-controller="Store" asp-action="Index"><i class="fa-solid fa-circle-arrow-left fs-2"></i></a>
+</div>
+    <hr />
+
+</div>
+  
+    <div class="row">
+    <div class="d-flex justify-content-end">
+        <span class="mx-2">Add New Item</span>
+        <a asp-route-id="@Model[0].Id"  asp-action="AddItemToBranch" asp-controller="Item" class="link-primary fw-bold"> 
+        <i class="fa-solid fa-circle-plus fs-2"></i>
+
+        </a>
+    </div>
+    </div>
+
+<div class="table-responsive">
+<table class="table">
+
+
+    <thead>
+
+   
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price Per unit</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if(Model.Count==0){
+
+            <tr>
+
+                <td colspan=6>There is No Items Till Now</td>
+            </tr>
+
+        }else{
+
+
+               @foreach(var item in Model){
+     var data= new Dictionary<string, string>
+    {
+        { "Id", ""+@item.Item.ID },
+        { "branchId", ""+@item.Id }
+    };
+
+
+         var data2= new Dictionary<string, string>
+    {
+        { "oldItemId", ""+@item.Item.ID },
+        { "Id", ""+@item.Id }
+    };
+             <tr>
+
+                <td>@item.Item.ID</td>
+                <td>@item.Item.Name</td>
+                <td>@item.Quntity</td>
+                <td>@item.Item.Price</td>
+                <td><a asp-action="UpdateItemFromBranch" asp-controller="Item"  asp-all-route-data="@data2" class="btn btn-success">Edit</a></td>
+                <td><a onclick="return confirm('Are you sure you want to delete this item?');" asp-action="DeleteItemFromBranch" asp-controller="Item" asp-all-route-data="@data"  class="btn btn-danger">Delete</a></td>
+                <td><a asp-action="PurchaseMoreFromItem" asp-controller="Item" asp-all-route-data="@data2"  class="btn btn-primary">Purshase</a></td>
+
+            </tr>
+        }
+        }
+
+        
+
+
+    </tbody>
+
+
+</table>
+
+</div>
